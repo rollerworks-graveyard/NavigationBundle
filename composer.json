@@ -1,0 +1,31 @@
+{
+    "name": "rollerworks/navigation-bundle",
+    "description": "KnpMenu navigation building bundle for Symfony2",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastiaan Stok",
+            "email": "s.stok@rollerscapes.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.1",
+        "symfony/expression-language": "~2.4",
+        "knplabs/knp-menu-bundle": "~2.0, >v2.0.0-alpha1@dev"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "0.*@dev",
+        "matthiasnoback/symfony-dependency-injection-test": "0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Rollerworks\\Bundle\\NavigationBundle": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
