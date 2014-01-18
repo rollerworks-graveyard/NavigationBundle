@@ -12,7 +12,7 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.1",
         "symfony/expression-language": "~2.4",
-        "knplabs/knp-menu-bundle": "~2.0, >v2.0.0-alpha1@dev"
+        "knplabs/knp-menu-bundle": "~2.0@dev, >v2.0.0-alpha1@dev"
     },
     "require-dev": {
         "matthiasnoback/symfony-config-test": "0.*@dev",
