@@ -62,8 +62,8 @@ like '@@your value', the leading '@@' is then converted to '@'.
 
 ### Defining menus
 
-Menus can be declared under the `rollerworks_navigation.menus`,
-you can add as menu menus as you like.
+Menus can be declared under the `rollerworks_navigation.menus` configuration tree,
+you can define as many menus as you need.
 
 Each menu is registered in the Service Container as `rollerworks_navigation.menu.[menu-name]`
 and is tagged for the KnpMenu loader by the menu-name.
@@ -88,13 +88,14 @@ rollerworks_navigation:
                         parameters: [] # Parameter to pass to the method (same as service container parameters, including Expression)
 ```
 
-*Note:** You can only either use the static, service or expression.
-When using either service or expression any sub-items must provided by the returned object.
+**Note:** You can only either use the static, service or expression.
+
+When using a service or expression sub-items must provided by the returned MenuItem object.
 
 ### Defining breadcrumbs
 
-Breadcrumbs can be declared under the `rollerworks_navigation.breadcrumbs`,
-you can add as menu breadcrumbs as you like.
+Breadcrumbs can be declared under the `rollerworks_navigation.breadcrumbs` configuration tree,
+you define as many breadcrumbs as you need.
 
 In comparison with menus, deeper breadcrumbs reference there parent by name,
 the parent may in turn reference another parent.
@@ -107,8 +108,8 @@ and use a 'root-bundle' to reference from.
 Use the importing capabilities of the Symfony Config component for
 importing config files from the bundles.
 
-The final structure is normalized before registering so no
-complex building at runtime is done.
+> The final structure is normalized before registering, so no complex building or resolving
+> is done that runtime.
 
 Each breadcrumb is registered in the Service Container as `rollerworks_navigation.breadcrumbs.[breadcrumb-name]`
 and is tagged for the KnpMenu loader by the menu-name.
@@ -118,6 +119,8 @@ rollerworks_navigation:
     breadcrumbs:
         breadcrumb-name:
             parent:            ~                            # Optional parent breadcrumb to reference (by name)
+
+            # Static configuration
             label:             ~                            # Label of the breadcrumb will be translated with the translator_domain
             translator_domain: Breadcrumbs                  # translator domain for the label
             route:             { name: ~, parameters: { } } # name can not be empty
