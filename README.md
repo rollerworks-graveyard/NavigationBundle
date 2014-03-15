@@ -100,7 +100,7 @@ you define as many breadcrumbs as you need.
 In comparison with menus, deeper breadcrumbs reference there parent by name,
 the parent may in turn reference another parent.
 
-> **WARNING Recursion is currently not detected!!**
+> **Note.** Any Circular reference is will throw an exception.
 
 Its a good practice to keep the related breadcrumb(s) in the bundle itself,
 and use a 'root-bundle' to reference from.

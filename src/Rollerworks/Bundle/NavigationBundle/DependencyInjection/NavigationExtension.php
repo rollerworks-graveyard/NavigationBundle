@@ -81,9 +81,11 @@ class NavigationExtension extends Extension
             $methods = array();
 
             $breadcrumbName = $name;
+            $loaded = array();
 
             while (null !== $breadcrumb) {
                 $child = $this->createMenuItemDefinition($name, $breadcrumb);
+                $loaded[$name] = true;
 
                 if (is_array($child)) {
                     unset($child['parent']);
@@ -96,6 +98,10 @@ class NavigationExtension extends Extension
                 if (null !== $breadcrumb['parent']) {
                     if (!isset($breadcrumbs[$breadcrumb['parent']])) {
                         throw new \RuntimeException(sprintf('Parent "%s" of breadcrumb "%s" is not registered.', $breadcrumb['parent'], $name));
+                    }
+
+                    if (isset($loaded[$breadcrumb['parent']])) {
+                        throw new \RuntimeException(sprintf('Circular reference detected with parent of breadcrumb "%s", path: "%s".', $name, implode(' -> ', array_keys($loaded))));
                     }
 
                     $name = $breadcrumb['parent'];

@@ -26,7 +26,7 @@ if (version_compare(PHP_VERSION, '5.4', '>=') && gc_enabled()) {
 /**
  * @var $loader ClassLoader
  */
-$loader = require_once __DIR__ . '/../vendor/autoload.php';
+$loader = require __DIR__ . '/../vendor/autoload.php';
 $loader->add('Rollerworks\\Bundle\\NavigationBundle\\Tests', __DIR__);
 
 return $loader;

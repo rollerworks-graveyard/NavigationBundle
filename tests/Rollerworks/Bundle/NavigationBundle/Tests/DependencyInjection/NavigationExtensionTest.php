@@ -191,6 +191,42 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $this->compile();
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Circular reference detected with parent of breadcrumb "foo", path: "webhosting -> bar -> foo".
+     */
+    public function testCircularReferencesDetectionInBreadcrumbs()
+    {
+        $this->load(array(
+            'breadcrumbs' => array(
+                'dashboard' => array(
+                    'parent' => null,
+                    'label' => 'Dashboard',
+                    'route' => array('name' => 'site_default'),
+                    'translator_domain' => 'Breadcrumbs',
+                ),
+                'webhosting' => array(
+                    'parent' => 'bar',
+                    'label' => 'Webhosting',
+                    'route' => array('name' => 'webhosting_home'),
+                    'translator_domain' => 'Breadcrumbs',
+                ),
+                'foo' => array(
+                    'parent' => 'webhosting',
+                    'label' => 'Dashboard',
+                    'route' => array('name' => 'site_default'),
+                    'translator_domain' => 'Breadcrumbs',
+                ),
+                'bar' => array(
+                    'parent' => 'foo',
+                    'label' => 'Dashboard',
+                    'route' => array('name' => 'site_default'),
+                    'translator_domain' => 'Breadcrumbs',
+                ),
+            )
+        ));
+    }
+
     public function testMenusAreRegistered()
     {
         $this->load(array(
