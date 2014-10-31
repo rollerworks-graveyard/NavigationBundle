@@ -6,7 +6,7 @@ and breadcrumbs for the KnpMenuBundle in the app-config.
 
 ## Installation
 
-> Please make sure you install the KnpMenuMenuBundle before continuing.
+> Please make sure you install the KnpMenuBundle before continuing.
 
 ### Step 1: Using Composer (recommended)
 
