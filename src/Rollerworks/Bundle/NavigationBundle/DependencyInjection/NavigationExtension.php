@@ -131,7 +131,7 @@ class NavigationExtension extends Extension
      *
      * @return Definition
      */
-    private function createMenuItem($name, array $options = array())
+    private function createMenuItem($name, $options = array())
     {
         unset($options['items']);
 
@@ -152,8 +152,15 @@ class NavigationExtension extends Extension
     private function createMenuItemDefinition($name, array $item)
     {
         if (isset($item['route']['parameters'])) {
-            $item['route']['parameters'] = $this->resolveParameters($item['route']['parameters']);
+            $item['routeParameters'] = $this->resolveParameters($item['route']['parameters']);
+            $item['routeAbsolute'] = $this->resolveParameters($item['route']['absolute']);
+            $item['route'] = $this->resolveParameters($item['route']['name']);
         }
+
+        $item['options'] = $this->resolveParameters($item['options']);
+        $item = array_merge($item['options'], $item);
+
+        unset($item['options']);
 
         if (!empty($item['service'])) {
             $definition = new Definition('stdClass');
@@ -234,7 +241,7 @@ class NavigationExtension extends Extension
      *
      * @param string $value
      *
-     * @return Reference
+     * @return mixed
      */
     private function resolveParameters($value)
     {

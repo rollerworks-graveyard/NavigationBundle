@@ -42,7 +42,9 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                     'customers' => array(
                         'parent' => null,
                         'label' => null,
+                        'options' => array(),
                         'translator_domain' => 'Breadcrumbs',
+                        'uri' => null,
                         'expression' => null,
                     ),
                 ),
@@ -81,7 +83,9 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                     'customer' => array(
                         'parent' => null,
                         'label' => null,
+                        'options' => array(),
                         'translator_domain' => 'Breadcrumbs',
+                        'uri' => null,
                         'service' => array(
                             'id' => 'acme_customer.navigation',
                             'method' => 'getBreadcrumb',
@@ -92,7 +96,9 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                     'webhosting' => array(
                         'parent' => null,
                         'label' => null,
+                        'options' => array(),
                         'translator_domain' => 'Breadcrumbs',
+                        'uri' => null,
                         'service' => array(
                             'id' => 'acme_webhosting.navigation',
                             'method' => 'getBreadcrumb',
