@@ -78,6 +78,7 @@ rollerworks_navigation:
                     label:             ~                            # Label of the breadcrumb will be translated with the translator_domain
                     translator_domain: Menus                        # translator domain for the label
                     route:             { name: ~, parameters: { } } # name can not be empty
+                    uri:               ~                            # Alternatively you can use a URI instead of a route
                     items:             []                           # Sub-level items, same as this example (unlimited depth nesting)
 
                     # alternatively you can reference a service for getting the Menu object
@@ -124,6 +125,7 @@ rollerworks_navigation:
             label:             ~                            # Label of the breadcrumb will be translated with the translator_domain
             translator_domain: Breadcrumbs                  # translator domain for the label
             route:             { name: ~, parameters: { } } # name can not be empty
+            uri:               ~                            # Alternatively you can use a URI instead of a route
 
             # alternatively you can reference a service for getting the Menu object
             # The service must return a Knp\Menu\ItemInterface instance

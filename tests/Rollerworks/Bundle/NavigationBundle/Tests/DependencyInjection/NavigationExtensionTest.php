@@ -40,16 +40,16 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array()));
-        $def->addMethodCall('addChild', array('customers', array('label' => 'Customers', 'translator_domain' => 'Breadcrumbs')));
+        $def->addMethodCall('addChild', array('customers', array('label' => 'Customers', 'translator_domain' => 'Breadcrumbs', 'uri' => null)));
 
-        $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.breadcrumbs.customers'));
+        $this->assertEquals((array) $def, (array) $this->container->findDefinition('rollerworks_navigation.breadcrumbs.customers'));
 
         $def = new Definition('Knp\Menu\MenuFactory');
         $def->setTags(array('knp_menu.menu' => array(array('alias' => 'webhosting'))));
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array()));
-        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs')));
+        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'uri' => null)));
         $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.breadcrumbs.webhosting'));
 
         $this->compile();
@@ -86,8 +86,8 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array()));
-        $def->addMethodCall('addChild', array('dashboard', array('label' => 'Dashboard', 'translator_domain' => 'Breadcrumbs', 'route' => array('name' => 'site_default', 'parameters' => array()))));
-        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'route' => array('name' => 'webhosting_home', 'parameters' => array()))));
+        $def->addMethodCall('addChild', array('dashboard', array('label' => 'Dashboard', 'route' => 'site_default', 'translator_domain' => 'Breadcrumbs', 'uri' => null, 'routeParameters' => array(), 'routeAbsolute' => false)));
+        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'route' => 'webhosting_home', 'translator_domain' => 'Breadcrumbs', 'uri' => null, 'routeParameters' => array(), 'routeAbsolute' => false)));
         $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.breadcrumbs.webhosting'));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -95,9 +95,9 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array()));
-        $def->addMethodCall('addChild', array('dashboard', array('label' => 'Dashboard', 'translator_domain' => 'Breadcrumbs', 'route' => array('name' => 'site_default', 'parameters' => array()))));
-        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'route' => array('name' => 'webhosting_home', 'parameters' => array()))));
-        $def->addMethodCall('addChild', array('webhosting_account', array('label' => 'Example.com', 'translator_domain' => null, 'route' => array('name' => 'webhosting_account', 'parameters' => array('id' => 5)))));
+        $def->addMethodCall('addChild', array('dashboard', array('label' => 'Dashboard', 'translator_domain' => 'Breadcrumbs', 'route' => 'site_default', 'routeParameters' => array(), 'routeAbsolute' => false, 'uri' => null)));
+        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'route' => 'webhosting_home', 'routeParameters' => array(), 'routeAbsolute' => false, 'uri' => null)));
+        $def->addMethodCall('addChild', array('webhosting_account', array('label' => 'Example.com', 'translator_domain' => null, 'route' => 'webhosting_account', 'routeParameters' => array('id' => 5), 'routeAbsolute' => false, 'uri' => null)));
         $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.breadcrumbs.webhosting_account'));
 
         $this->compile();
@@ -115,6 +115,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'parent' => null,
                     'label' => 'Webhosting',
                     'translator_domain' => 'Breadcrumbs',
+                    'uri' => null,
                     'route' => array(
                         'name' => 'test',
                         'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()")
@@ -133,12 +134,12 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
             'webhosting', array(
                 'label' => 'Webhosting',
                 'translator_domain' => 'Breadcrumbs',
-                'route' => array(
-                    'name' => 'test',
-                    'parameters' => array(
-                        'foo' => '@bar',
-                        'name' => new Expression("service('security_context').getToken().getName()"),
-                    )
+                'uri' => null,
+                'route' => 'test',
+                'routeAbsolute' => false,
+                'routeParameters' => array(
+                    'foo' => '@bar',
+                    'name' => new Expression("service('security_context').getToken().getName()"),
                 ),
             ),
         ));
@@ -187,6 +188,44 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->addMethodCall('addChild', array($definition));
 
         $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.breadcrumbs.customers'));
+
+        $this->compile();
+    }
+
+    public function testCustomOptionsAreResolved()
+    {
+        $this->load(array(
+            'breadcrumbs' => array(
+                'customers' => array(
+                    'parent' => null,
+                    'label' => 'Customers',
+                    'translator_domain' => 'Breadcrumbs',
+                    'options' => array('icon' => 'customers')
+                ),
+                'webhosting' => array(
+                    'parent' => null,
+                    'label' => 'Webhosting',
+                    'translator_domain' => 'Breadcrumbs',
+                ),
+            )
+        ));
+
+        $def = new Definition('Knp\Menu\MenuFactory');
+        $def->setTags(array('knp_menu.menu' => array(array('alias' => 'customers'))));
+        $def->setFactoryService('knp_menu.factory');
+        $def->setFactoryMethod('createItem');
+        $def->setArguments(array('root', array()));
+        $def->addMethodCall('addChild', array('customers', array('label' => 'Customers', 'translator_domain' => 'Breadcrumbs', 'uri' => null, 'icon' => 'customers')));
+
+        $this->assertEquals((array) $def, (array) $this->container->findDefinition('rollerworks_navigation.breadcrumbs.customers'));
+
+        $def = new Definition('Knp\Menu\MenuFactory');
+        $def->setTags(array('knp_menu.menu' => array(array('alias' => 'webhosting'))));
+        $def->setFactoryService('knp_menu.factory');
+        $def->setFactoryMethod('createItem');
+        $def->setArguments(array('root', array()));
+        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'uri' => null,)));
+        $this->assertEquals((array) $def, (array) $this->container->findDefinition('rollerworks_navigation.breadcrumbs.webhosting'));
 
         $this->compile();
     }
@@ -276,8 +315,8 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array('template' => null)));
-        $def->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'translator_domain' => 'Menus', 'route' => array('name' => 'webhosting_home', 'parameters' => array()))));
-        $def->addMethodCall('addChild', array('administration', array('label' => 'Administration', 'translator_domain' => 'Menus', 'route' => array('name' => 'administration_home', 'parameters' => array()))));
+        $def->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'translator_domain' => 'Menus', 'route' => 'webhosting_home', 'routeParameters' => array(), 'routeAbsolute' => false, 'uri' => null)));
+        $def->addMethodCall('addChild', array('administration', array('label' => 'Administration', 'translator_domain' => 'Menus', 'route' => 'administration_home', 'routeParameters' => array(), 'routeAbsolute' => false, 'uri' => null)));
 
         $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.menu.main'));
 
@@ -291,19 +330,19 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $rootDef = new Definition('Knp\Menu\MenuFactory');
         $rootDef->setFactoryService('knp_menu.factory');
         $rootDef->setFactoryMethod('createItem');
-        $rootDef->setArguments(array('administration', array('label' => 'Administration', 'route' => array('name' => 'administration_home', 'parameters' => array()), 'translator_domain' => 'Menus')));
-        $rootDef->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'route' => array('name' => 'administration_customers', 'parameters' => array()), 'translator_domain' => 'Menus')));
+        $rootDef->setArguments(array('administration', array('label' => 'Administration', 'route' => 'administration_home', 'routeParameters' => array(), 'routeAbsolute' => false, 'translator_domain' => 'Menus', 'uri' => null)));
+        $rootDef->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'route' => 'administration_customers', 'routeParameters' => array(), 'routeAbsolute' => false, 'translator_domain' => 'Menus', 'uri' => null)));
 
         $invoiceDef = new Definition('Knp\Menu\MenuFactory');
         $invoiceDef->setFactoryService('knp_menu.factory');
         $invoiceDef->setFactoryMethod('createItem');
-        $invoiceDef->setArguments(array('invoices', array('label' => 'Invoices', 'route' => array('name' => 'administration_invoices', 'parameters' => array()) , 'translator_domain' => 'Menus')));
-        $invoiceDef->addMethodCall('addChild', array('invoices_paid', array('label' => 'Paid', 'route' => array('name' => 'administration_invoices', 'parameters' => array('filter' => 'paid')), 'translator_domain' => 'Menus')));
+        $invoiceDef->setArguments(array('invoices', array('label' => 'Invoices', 'route' => 'administration_invoices', 'routeParameters' => array(), 'routeAbsolute' => false , 'translator_domain' => 'Menus', 'uri' => null)));
+        $invoiceDef->addMethodCall('addChild', array('invoices_paid', array('label' => 'Paid', 'route' => 'administration_invoices', 'routeParameters' => array('filter' => 'paid'), 'routeAbsolute' => false, 'translator_domain' => 'Menus', 'uri' => null)));
         $rootDef->addMethodCall('addChild', array($invoiceDef));
 
         $def->addMethodCall('addChild', array($rootDef));
 
-        $this->assertEquals((array) $def, (array) $this->container->findDefinition('rollerworks_navigation.menu.control_panel'));
+        $this->assertEquals($def, $this->container->findDefinition('rollerworks_navigation.menu.control_panel'));
 
         $this->compile();
     }
@@ -337,7 +376,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array('template' => null)));
-        $def->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'translator_domain' => 'Menus', 'route' => array('name' => 'webhosting_home', 'parameters' => array()))));
+        $def->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'translator_domain' => 'Menus', 'route' => 'webhosting_home', 'routeParameters' => array(), 'routeAbsolute' => false, 'uri' => null)));
 
         $childDef = new Definition('stdClass');
         $childDef->setFactoryService('acme_customer.navigation');
@@ -390,12 +429,18 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array('template' => null)));
-        $def->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'translator_domain' => 'Menus', 'route' => array('name' => 'webhosting_home', 'parameters' => array()))));
-        $def->addMethodCall('addChild', array('administration', array('label' => 'Administration', 'translator_domain' => 'Menus', 'route' => array('name' => 'administration_home', 'parameters' => array(
+        $def->addMethodCall('addChild', array('customer', array('label' => 'Customers', 'translator_domain' => 'Menus', 'route' => 'webhosting_home', 'routeParameters' => array(), 'routeAbsolute' => false, 'uri' => null)));
+        $def->addMethodCall('addChild', array('administration', array(
+            'label' => 'Administration',
+            'translator_domain' => 'Menus',
+            'route' => 'administration_home',
+            'routeParameters' => array(
                 'foo' => '@bar',
                 'name' => new Expression("service('security_context').getToken().getName()"),
-            )
-        ))));
+            ),
+            'routeAbsolute' => false,
+            'uri' => null
+        )));
 
         $childDef = new Definition('stdClass');
         $childDef->setFactoryService('acme_servers.navigation');
