@@ -11,10 +11,10 @@ make sure you have the KnpMenuBundle installed and properly configured.
 
 The recommended way to install the RollerworksNavigationBundle is through [Composer].
 
-Require the `rollerworks/password-strength-bundle` package by running:
+Require the `rollerworks/navigation-bundle` package by running:
 
 ```bash
-$ php composer.phar require rollerworks/password-strength-bundle
+$ php composer.phar require rollerworks/navigation-bundle
 ```
 
 Now, Composer will automatically download all the required files, and install
