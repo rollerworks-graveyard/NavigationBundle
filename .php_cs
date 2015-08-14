@@ -1,35 +1,31 @@
 <?php
 
-/**
- * @link http://cs.sensiolabs.org/
- * @link http://symfony.com/doc/current/components/finder.html
- */
+$header = <<<EOF
+This file is part of the RollerworksNavigationBundle package.
 
-$finder = Symfony\CS\Finder\DefaultFinder::create()
-    ->notName('LICENSE')
-    ->notName('README.md')
-    ->notName('.php_cs')
-    ->notName('composer.*')
-    ->notName('phpunit.xml*')
-    ->notName('*.phar')
-    ->notName('bootstrap.php.cache')
-    ->ignoreDotFiles(true)
-    ->ignoreVCS(true)
+(c) Sebastiaan Stok <s.stok@rollerscapes.net>
 
-    // Ignore Resources/{meta,doc,public,sql} and fixture dirs
-    ->files()->filter(function (\SplFileInfo $file) {
-        if (preg_match('#(Resources/(meta|doc|public|sql))|/fixtures/#i', str_replace('\\', '/', $file->getPath()))) {
-            return false;
-        }
+This source file is subject to the MIT license that is bundled
+with this source code in the file LICENSE.
+EOF;
 
-        return true;
-    })
-
-    ->in(__DIR__ . '/src/')
-    ->in(__DIR__ . '/tests/')
-;
+Symfony\CS\Fixer\Contrib\HeaderCommentFixer::setHeader($header);
 
 return Symfony\CS\Config\Config::create()
-    ->finder($finder)
-    ->fixers(Symfony\CS\FixerInterface::ALL_LEVEL)
+    ->setUsingLinter(false)
+    // use SYMFONY_LEVEL:
+    ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
+    // and extra fixers:
+    ->fixers([
+        'ordered_use',
+        //'strict',
+        'strict_param',
+        //'short_array_syntax',
+        'phpdoc_order',
+        'header_comment',
+        '-psr0',
+    ])
+    ->finder(
+        Symfony\CS\Finder\DefaultFinder::create()->in(array(__DIR__.'/src', __DIR__.'/tests'))
+    )
 ;

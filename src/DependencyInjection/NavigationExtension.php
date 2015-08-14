@@ -1,9 +1,9 @@
 <?php
 
-/**
+/*
  * This file is part of the RollerworksNavigationBundle package.
  *
- * (c) 2014 Sebastiaan Stok <s.stok@rollerscapes.net>
+ * (c) Sebastiaan Stok <s.stok@rollerscapes.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -60,7 +60,7 @@ class NavigationExtension extends Extension
             $def->setTags(array('knp_menu.menu' => array(array('alias' => $name))));
             $this->buildMenuDefinition($def, $menu['items']);
 
-            $container->setDefinition('rollerworks_navigation.menu.' . $name, $def);
+            $container->setDefinition('rollerworks_navigation.menu.'.$name, $def);
         }
     }
 
@@ -121,7 +121,7 @@ class NavigationExtension extends Extension
             $finalBreadcrumbs[$breadcrumbName] = $this->createMenuItem('root');
             $finalBreadcrumbs[$breadcrumbName]->setTags(array('knp_menu.menu' => array(array('alias' => $breadcrumbName))));
             $finalBreadcrumbs[$breadcrumbName]->setMethodCalls($methods);
-            $container->setDefinition('rollerworks_navigation.breadcrumbs.' . $breadcrumbName, $finalBreadcrumbs[$breadcrumbName]);
+            $container->setDefinition('rollerworks_navigation.breadcrumbs.'.$breadcrumbName, $finalBreadcrumbs[$breadcrumbName]);
         }
     }
 

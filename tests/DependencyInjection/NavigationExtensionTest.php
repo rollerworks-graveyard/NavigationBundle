@@ -1,9 +1,9 @@
 <?php
 
-/**
+/*
  * This file is part of the RollerworksNavigationBundle package.
  *
- * (c) 2014 Sebastiaan Stok <s.stok@rollerscapes.net>
+ * (c) Sebastiaan Stok <s.stok@rollerscapes.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -32,7 +32,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'label' => 'Webhosting',
                     'translator_domain' => 'Breadcrumbs',
                 ),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -78,7 +78,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'route' => array('name' => 'webhosting_account', 'parameters' => array('id' => 5)),
                     'translator_domain' => null,
                 ),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -118,11 +118,11 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'uri' => null,
                     'route' => array(
                         'name' => 'test',
-                        'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()")
-                    )
+                        'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()"),
+                    ),
                 ),
                 'news' => array('expression' => "service('acme_customer.navigation').getBreadcrumb()"),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -169,10 +169,10 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'service' => array(
                         'id' => 'acme_customer.navigation',
                         'method' => 'getBreadcrumb',
-                        'parameters' => array('foo', 'bar')
+                        'parameters' => array('foo', 'bar'),
                     ),
                 ),
-            )
+            ),
         ));
 
         $definition = new Definition('stdClass');
@@ -200,14 +200,14 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'parent' => null,
                     'label' => 'Customers',
                     'translator_domain' => 'Breadcrumbs',
-                    'options' => array('icon' => 'customers')
+                    'options' => array('icon' => 'customers'),
                 ),
                 'webhosting' => array(
                     'parent' => null,
                     'label' => 'Webhosting',
                     'translator_domain' => 'Breadcrumbs',
                 ),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -224,7 +224,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
         $def->setFactoryService('knp_menu.factory');
         $def->setFactoryMethod('createItem');
         $def->setArguments(array('root', array()));
-        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'uri' => null,)));
+        $def->addMethodCall('addChild', array('webhosting', array('label' => 'Webhosting', 'translator_domain' => 'Breadcrumbs', 'uri' => null)));
         $this->assertEquals((array) $def, (array) $this->container->findDefinition('rollerworks_navigation.breadcrumbs.webhosting'));
 
         $this->compile();
@@ -262,7 +262,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                     'route' => array('name' => 'site_default'),
                     'translator_domain' => 'Breadcrumbs',
                 ),
-            )
+            ),
         ));
     }
 
@@ -280,7 +280,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                             'label' => 'Administration',
                             'route' => array('name' => 'administration_home'),
                         ),
-                    )
+                    ),
 
                 ),
                 'control_panel' => array(
@@ -301,13 +301,13 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                                             'label' => 'Paid',
                                             'route' => array('name' => 'administration_invoices', 'parameters' => array('filter' => 'paid')),
                                         ),
-                                    )
+                                    ),
                                 ),
-                            )
+                            ),
                         ),
-                    )
+                    ),
                 ),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -363,12 +363,12 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                             'service' => array(
                                 'id' => 'acme_customer.navigation',
                                 'method' => 'getAdminMenu',
-                                'parameters' => array('foo', 'bar')
-                            )
+                                'parameters' => array('foo', 'bar'),
+                            ),
                         ),
-                    )
+                    ),
                 ),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -408,20 +408,20 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                             'label' => 'Administration',
                             'route' => array(
                                 'name' => 'administration_home',
-                                'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()")
+                                'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()"),
                             ),
                         ),
                         'servers' => array(
                             'service' => array(
                                 'id' => 'acme_servers.navigation',
                                 'method' => 'getMenu',
-                                'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()")
-                            )
+                                'parameters' => array('foo' => '@@bar', 'name' => "@service('security_context').getToken().getName()"),
+                            ),
                         ),
-                        'news' => array('expression' => "service('acme_servers.navigation').getMenu()")
-                    )
+                        'news' => array('expression' => "service('acme_servers.navigation').getMenu()"),
+                    ),
                 ),
-            )
+            ),
         ));
 
         $def = new Definition('Knp\Menu\MenuFactory');
@@ -439,7 +439,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                 'name' => new Expression("service('security_context').getToken().getName()"),
             ),
             'routeAbsolute' => false,
-            'uri' => null
+            'uri' => null,
         )));
 
         $childDef = new Definition('stdClass');
@@ -464,7 +464,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
     protected function getContainerExtensions()
     {
         return array(
-            new NavigationExtension()
+            new NavigationExtension(),
         );
     }
 }
