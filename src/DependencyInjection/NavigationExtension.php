@@ -136,8 +136,7 @@ class NavigationExtension extends Extension
         unset($options['items']);
 
         $def = new Definition('Knp\Menu\MenuFactory');
-        $def->setFactoryService('knp_menu.factory');
-        $def->setFactoryMethod('createItem');
+        $this->setFactoryService($def, 'knp_menu.factory', 'createItem');
         $def->setArguments(array($name, $options));
 
         return $def;
@@ -163,22 +162,31 @@ class NavigationExtension extends Extension
         unset($item['options']);
 
         if (!empty($item['service'])) {
+            if (empty($item['service']['method'])) {
+                return new Reference($item['service']['id']);
+            }
+
             $definition = new Definition('stdClass');
-            $definition->setFactoryService($item['service']['id']);
-            $definition->setFactoryMethod($item['service']['method']);
+            $this->setFactoryService($definition, $item['service']['id'], $item['service']['method']);
 
             if (isset($item['service']['parameters'])) {
                 $parameters = $this->resolveParameters($item['service']['parameters']);
 
                 if (!is_array($parameters)) {
-                    $definition->setArguments(array($parameters));
-                } else {
-                    $definition->setArguments($parameters);
+                    $parameters = array($parameters);
                 }
+
+                $definition->setArguments($parameters);
             }
-        } elseif (!empty($item['expression'])) {
+
+            return $definition;
+        }
+
+        if (!empty($item['expression'])) {
             return new Expression($item['expression']);
-        } elseif (!empty($item['items'])) {
+        }
+
+        if (!empty($item['items'])) {
             $childItems = $item['items'];
 
             // Don't pass the items to the factory
@@ -186,13 +194,13 @@ class NavigationExtension extends Extension
 
             $definition = $this->createMenuItem($name, $item);
             $this->buildMenuDefinition($definition, $childItems);
-        } else {
-            unset($item['items'], $item['expression']);
 
-            $definition = $item;
+            return $definition;
         }
 
-        return $definition;
+        unset($item['items'], $item['expression']);
+
+        return $item;
     }
 
     /**
@@ -256,5 +264,15 @@ class NavigationExtension extends Extension
         }
 
         return $value;
+    }
+
+    private function setFactoryService(Definition $definition, $serviceId, $method)
+    {
+        if (method_exists($definition, 'setFactory')) {
+            $definition->setFactory(array(new Reference($serviceId), $method));
+        } else {
+            $definition->setFactoryService($serviceId);
+            $definition->setFactoryMethod($method);
+        }
     }
 }
