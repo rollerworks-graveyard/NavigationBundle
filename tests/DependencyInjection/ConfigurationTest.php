@@ -1,9 +1,9 @@
 <?php
 
-/**
+/*
  * This file is part of the RollerworksNavigationBundle package.
  *
- * (c) 2014 Sebastiaan Stok <s.stok@rollerscapes.net>
+ * (c) Sebastiaan Stok <s.stok@rollerscapes.net>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -20,7 +20,7 @@ class ConfigurationTest extends AbstractConfigurationTestCase
     {
         $this->assertProcessedConfigurationEquals(
             array(
-                array() // no values
+                array(), // no values
             ),
             array('menus' => array(), 'breadcrumbs' => array())
         );
@@ -33,7 +33,7 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                 array(
                     'breadcrumbs' => array(
                         'customers' => array(),
-                    )
+                    ),
                 ),
             ),
             array(
@@ -62,7 +62,7 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                             'service' => array(
                                 'id' => 'acme_customer.navigation',
                                 'method' => 'getBreadcrumb',
-                            )
+                            ),
                         ),
                         'webhosting' => array(
                             'service' => array(
@@ -70,12 +70,12 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                                 'method' => 'getBreadcrumb',
                                 'parameters' => array(
                                     'id' => '%webhosting.account%',
-                                    'foo' => array('bar', 'bla')
+                                    'foo' => array('bar', 'bla'),
                                 ),
-                            )
-                        )
-                    )
-                )
+                            ),
+                        ),
+                    ),
+                ),
             ),
             array(
                 'menus' => array(),
@@ -104,7 +104,7 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                             'method' => 'getBreadcrumb',
                             'parameters' => array(
                                 'id' => '%webhosting.account%',
-                                'foo' => array('bar', 'bla')
+                                'foo' => array('bar', 'bla'),
                             ),
                         ),
                         'expression' => null,
@@ -121,7 +121,7 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                 array(
                     'menus' => array(
                         'customers' => array(),
-                    )
+                    ),
                 ),
             ),
             array(
@@ -131,7 +131,7 @@ class ConfigurationTest extends AbstractConfigurationTestCase
                         'items' => array(),
                     ),
                 ),
-                'breadcrumbs' => array()
+                'breadcrumbs' => array(),
             )
         );
     }
