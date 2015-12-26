@@ -2,9 +2,15 @@ RollerworksNavigationBundle
 ===========================
 
 The RollerworksNavigationBundle adds the ability to define menu-structures
-and breadcrumbs for the KnpMenuBundle in the application-config.
+and breadcrumbs for the KnpMenuBundle in your application configuration.
 
-## Installation
+Requirements
+------------
+
+You need at least PHP 5.3 and the KnpMenuBundle already installed and configured.
+
+Installation
+------------
 
 **Note:** The RollerworksNavigationBundle is an addition to the KnpMenuBundle,
 make sure you have the KnpMenuBundle installed and properly configured.
@@ -33,20 +39,17 @@ $bundles = array(
 
 [Composer]: https://getcomposer.org/
 
-## Usage
+Usage
+-----
 
 ### Expressions
 
-Since Symfony 2.4 you can make some parts of your application config more dynamic
-by using the [ExpressionLanguage]. As the RollerworksNavigationBundle registers navigation
+Since Symfony 2.4 you can make some parts of your application configuration more dynamic
+by using the [Symfony ExpressionLanguage]. As the RollerworksNavigationBundle registers navigation
 definitions as Services in the DependencyInjection Container you can also use expressions
 for the "parameters" config parameter.
 
 In practice you can use expressions for navigation translation/route and service parameters.
-
-**Note:**
-
-> Expressions require at least version 2.4 of the DependencyInjection component.
 
 Parameters values starting with an `@` will be treated as expressions, to mark the value
 as "literal" use a double `@` like `'@@your value'`, which is converted to `'@your value'`.
@@ -152,7 +155,41 @@ rollerworks_navigation:
 
 ```
 
-## License
+Versioning
+----------
 
-This bundle is released under the MIT license.
-See the bundled LICENSE file for details.
+For transparency and insight into the release cycle, and for striving
+to maintain backward compatibility, RollerworksSearch is maintained under
+the Semantic Versioning guidelines as much as possible.
+
+Releases will be numbered with the following format:
+
+`<major>.<minor>.<patch>`
+
+And constructed with the following guidelines:
+
+* Breaking backward compatibility bumps the major (and resets the minor and patch)
+* New additions without breaking backward compatibility bumps the minor (and resets the patch)
+* Bug fixes and misc changes bumps the patch
+
+For more information on SemVer, please visit <http://semver.org/>.
+
+License
+-------
+
+The source of this package is subject to the MIT license that is bundled
+with this source code in the file [LICENSE](LICENSE).
+
+Contributing
+------------
+
+This is an open source project. If you'd like to contribute,
+please read the [Contributing Guidelines][1]. If you're submitting
+a pull request, please follow the guidelines in the [Submitting a Patch][2] section.
+
+[1]: https://github.com/rollerworks/contributing
+[2]: https://contributing.readthedocs.org/en/latest/code/patches.html
+[3]: http://docutils.sourceforge.net/rst.html
+[4]: http://sphinx-doc.org/
+[5]: https://contributing.readthedocs.org/en/latest/documentation/format.html
+[6]: http://rollerworkssearch.readthedocs.org/en/latest/
