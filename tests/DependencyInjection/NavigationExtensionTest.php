@@ -319,7 +319,7 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
 
         $invoiceDef = new Definition('Knp\Menu\MenuFactory');
         $this->setFactoryService($invoiceDef, 'knp_menu.factory', 'createItem');
-        $invoiceDef->setArguments(array('invoices', array('label' => 'Invoices', 'route' => 'administration_invoices', 'routeParameters' => array(), 'routeAbsolute' => false , 'translator_domain' => 'Menus', 'uri' => null)));
+        $invoiceDef->setArguments(array('invoices', array('label' => 'Invoices', 'route' => 'administration_invoices', 'routeParameters' => array(), 'routeAbsolute' => false, 'translator_domain' => 'Menus', 'uri' => null)));
         $invoiceDef->addMethodCall('addChild', array('invoices_paid', array('label' => 'Paid', 'route' => 'administration_invoices', 'routeParameters' => array('filter' => 'paid'), 'routeAbsolute' => false, 'translator_domain' => 'Menus', 'uri' => null)));
         $rootDef->addMethodCall('addChild', array($invoiceDef));
 
