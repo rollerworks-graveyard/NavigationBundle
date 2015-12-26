@@ -102,10 +102,6 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
 
     public function testBreadcrumbsAreRegisteredWithExpression()
     {
-        if (!class_exists('Symfony\Component\DependencyInjection\ExpressionLanguage')) {
-            $this->markTestSkipped('Requires at least version 2.4 of the DependencyInjection component.');
-        }
-
         $this->load(array(
             'breadcrumbs' => array(
                 'webhosting' => array(
