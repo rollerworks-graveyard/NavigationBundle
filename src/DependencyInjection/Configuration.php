@@ -67,6 +67,14 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('translator_domain')->defaultValue('Breadcrumbs')->end()
                             ->scalarNode('uri')->defaultNull()->end()
                             ->arrayNode('route')
+                                ->beforeNormalization()
+                                    ->ifString()
+                                    ->then(
+                                        function ($v) {
+                                            return array('name' => $v);
+                                        }
+                                    )
+                                ->end()
                                 ->children()
                                     ->scalarNode('name')->cannotBeEmpty()->end()
                                     ->booleanNode('absolute')->defaultFalse()->end()
@@ -107,6 +115,14 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('translator_domain')->defaultValue('Menus')->end()
                 ->scalarNode('uri')->defaultNull()->end()
                 ->arrayNode('route')
+                    ->beforeNormalization()
+                        ->ifString()
+                        ->then(
+                            function ($v) {
+                                return array('name' => $v);
+                            }
+                        )
+                    ->end()
                     ->children()
                         ->scalarNode('name')->cannotBeEmpty()->end()
                         ->booleanNode('absolute')->defaultFalse()->end()
