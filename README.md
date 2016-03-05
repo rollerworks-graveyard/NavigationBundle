@@ -82,6 +82,7 @@ rollerworks_navigation:
                     label:             ~                            # Label of the menu-item, this will be translated with the translator_domain
                     translator_domain: Menus                        # translator domain for the label
                     route:             { name: ~, parameters: { } } # The route.name can not be empty, parameters is optional
+                                                                    # route can also be only a string (route name)
                     uri:               ~                            # Alternatively you can use a URI instead of a route
                     items:             []                           # Sub-level items, same as this example (unlimited depth nesting)
 
@@ -140,6 +141,7 @@ rollerworks_navigation:
             label:             ~                            # Label of the breadcrumb, this will be translated with the translator_domain
             translator_domain: Breadcrumbs                  # translator domain for the label
             route:             { name: ~, parameters: { } } # The route.name can not be empty, parameters is optional
+                                                            # route can also be only a string (route name)
             uri:               ~                            # Alternatively you can use a URI instead of a route
 
             # If your breadcrumb is to dynamic you may also use a dedicated service.

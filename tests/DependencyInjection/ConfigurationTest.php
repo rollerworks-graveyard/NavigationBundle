@@ -52,6 +52,44 @@ class ConfigurationTest extends AbstractConfigurationTestCase
         );
     }
 
+    public function testBreadcrumbWithRouteNodeAsString()
+    {
+        $this->assertProcessedConfigurationEquals(
+            array(
+                array(
+                    'breadcrumbs' => array(
+                        'customers' => array(
+                            'parent' => null,
+                            'label' => null,
+                            'options' => array(),
+                            'translator_domain' => 'Breadcrumbs',
+                            'route' => 'app_homepage',
+                            'expression' => null,
+                        ),
+                    ),
+                ),
+            ),
+            array(
+                'menus' => array(),
+                'breadcrumbs' => array(
+                    'customers' => array(
+                        'parent' => null,
+                        'label' => null,
+                        'options' => array(),
+                        'translator_domain' => 'Breadcrumbs',
+                        'route' => array(
+                            'name' => 'app_homepage',
+                            'absolute' => false,
+                            'parameters' => array(),
+                        ),
+                        'uri' => null,
+                        'expression' => null,
+                    ),
+                ),
+            )
+        );
+    }
+
     public function testBreadcrumbAcceptsService()
     {
         $this->assertProcessedConfigurationEquals(
