@@ -268,7 +268,6 @@ class NavigationExtensionTest extends AbstractExtensionTestCase
                             'route' => array('name' => 'administration_home'),
                         ),
                     ),
-
                 ),
                 'control_panel' => array(
                     'items' => array(

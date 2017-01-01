@@ -147,15 +147,21 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
             ->validate()
-                ->ifTrue(function ($v) { return !empty($v['service']) && (!empty($v['expression']) || null !== $v['label']); })
+                ->ifTrue(function ($v) {
+                    return !empty($v['service']) && (!empty($v['expression']) || null !== $v['label']);
+                })
                 ->thenInvalid('When a "service" or "expression" is set no other configurations should be set for this item.')
             ->end()
             ->validate()
-                ->ifTrue(function ($v) { return !empty($v['route']) && !empty($v['uri']); })
+                ->ifTrue(function ($v) {
+                    return !empty($v['route']) && !empty($v['uri']);
+                })
                 ->thenInvalid('An item can only have a route or uri, not both.')
             ->end()
             ->validate()
-                ->ifTrue(function ($v) { return empty($v['service']) && empty($v['expression']) && null === $v['label']; })
+                ->ifTrue(function ($v) {
+                    return empty($v['service']) && empty($v['expression']) && null === $v['label'];
+                })
                 ->thenInvalid('Missing a value for either "service" or "label" for this item.')
             ->end()
         ;
