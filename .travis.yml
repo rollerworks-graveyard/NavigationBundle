@@ -1,5 +1,11 @@
 language: php
 
+sudo: false
+
+branches:
+    only:
+        - master
+
 matrix:
     include:
         # Use the newer stack for HHVM as HHVM does not support Precise anymore since a long time and so Precise has an outdated version
@@ -19,8 +25,6 @@ matrix:
         - php: 7.1
           env: DEPENDENCIES='low'
     fast_finish: true
-
-sudo: false
 
 cache:
     directories:
