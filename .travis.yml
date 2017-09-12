@@ -8,8 +8,6 @@ branches:
 
 matrix:
     include:
-        - php: 5.3
-          env: SKIP_OEL=true
         - php: 5.4
           env: SKIP_OEL=true
         - php: 5.5
