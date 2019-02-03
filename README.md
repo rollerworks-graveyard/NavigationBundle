@@ -1,6 +1,8 @@
 RollerworksNavigationBundle
 ===========================
 
+##### :warning: ✋ This bundle is discontinued and will be archived soon! :warning: 
+
 The RollerworksNavigationBundle adds the ability to define menu-structures
 and breadcrumbs for the KnpMenuBundle in your application configuration.
 
